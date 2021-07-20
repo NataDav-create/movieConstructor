@@ -48,6 +48,20 @@ const createHeader = (param) => {
 		wrapper.append(logo)
 	}
 
+
+	if (param.header.menu) {
+		const menuWrapper = getElement('nav', ['menu-list']);
+		const allMenu = param.header.menu.map(item => {
+			const menuLink = getElement('a', ['menu-link'], {
+				link: item.link,
+			});
+			menuLink.textContent = item.title
+			return menuLink;
+		});
+		menuWrapper.append(...allMenu);
+		wrapper.append(menuWrapper)
+	}
+
 	if (param.header.social) {
 		const socialWrapper = getElement('div', ['social']);
 		const allSocial = param.header.social.map(item => {
@@ -59,10 +73,22 @@ const createHeader = (param) => {
 			socialLink.href = item.link;
 			return socialLink
 		});
-		console.log(allSocial)
 		socialWrapper.append(...allSocial);
 		wrapper.append(socialWrapper)
 	}
+
+	// if (param.header.menu) {
+	// 	const menuWrapper = getElement('nav', ['menu-list']);
+	// 	const allMenu = param.header.menu.map(item => {
+	// 		const menuLink = getElement('a', ['menu-link'], {
+	// 			link: item.link,
+	// 			title: item.title
+	// 		});
+	// 		return menuLink;
+	// 	});
+	// 	menuWrapper.append(...allMenu);
+	// 	wrapper.append(menuWrapper)
+	// }
 
 	header.append(container);
 	container.append(wrapper);
@@ -98,6 +124,16 @@ movieConstructor('.app', {
 				link: 'https://facebook.com',
 				image: 'witcher/social/facebook.svg'
 			}
-		]
+		],
+		menu: [{
+			title: 'Описание',
+			link: '#'
+		}, {
+			title: 'Трейлер',
+			link: '#'
+		}, {
+			title: 'Отзывы',
+			link: '#'
+		}]
 	}
 })
