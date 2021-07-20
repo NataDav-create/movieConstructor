@@ -22,8 +22,28 @@
 // 	menu.classList.toggle('header-active');
 // })
 
+const getElement = (tagName) => {
+	const element = document.createElement(tagName);
+	return element;
+}
+
+const createHeader = () => {
+	const header = getElement('header');
+	return header
+};
+
 const movieConstructor = (selector, options) => {
+	const app = document.querySelector(selector);
+	if (options.header) {
+		const header = createHeader();
+		app.append(header);
+	}
 
 };
 
-movieConstructor('.app')
+movieConstructor('.app', {
+	title: 'Witcher',
+	header: {
+		logo: '',
+	}
+})
