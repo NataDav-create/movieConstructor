@@ -40,6 +40,8 @@ const createHeader = (param) => {
 	const container = getElement('div', ['container']);
 	const wrapper = getElement('div', ['header']);
 
+	document.title = param.title;
+
 	if (param.header.logo) {
 		const logo = getElement('img', ['logo'], {
 			src: param.header.logo,
