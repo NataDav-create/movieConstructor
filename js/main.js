@@ -35,23 +35,29 @@ const getElement = (tagName, classNames, attributes) => {
 	return element;
 }
 
-const createHeader = (param) => {
+const createHeader = ({
+	title,
+	header: {
+		logo,
+		menu,
+		social
+	}
+}) => {
 	const header = getElement('header');
 	const container = getElement('div', ['container']);
 	const wrapper = getElement('div', ['header']);
 
-	if (param.header.logo) {
-		const logo = getElement('img', ['logo'], {
-			src: param.header.logo,
-			alt: `Logo ${param.title}`,
+	if (logo) {
+		const logoEl = getElement('img', ['logo'], {
+			src: logo,
+			alt: `Logo ${title}`,
 		});
-		wrapper.append(logo)
+		wrapper.append(logoEl)
 	}
 
-
-	if (param.header.menu) {
+	if (menu) {
 		const nav = getElement('nav', ['menu-list']);
-		const allMenuLink = param.header.menu.map(item => {
+		const allMenuLink = menu.map(item => {
 			const menuLink = getElement('a', ['menu-link'], {
 				href: item.link,
 				textContent: item.title
@@ -62,9 +68,9 @@ const createHeader = (param) => {
 		wrapper.append(nav)
 	}
 
-	if (param.header.social) {
+	if (social) {
 		const socialWrapper = getElement('div', ['social']);
-		const allSocial = param.header.social.map(item => {
+		const allSocial = social.map(item => {
 			const socialLink = getElement('a', ['social-link']);
 			socialLink.append(getElement('img', [], {
 				src: item.image,
@@ -76,19 +82,6 @@ const createHeader = (param) => {
 		socialWrapper.append(...allSocial);
 		wrapper.append(socialWrapper)
 	}
-
-	// if (param.header.menu) {
-	// 	const menuWrapper = getElement('nav', ['menu-list']);
-	// 	const allMenu = param.header.menu.map(item => {
-	// 		const menuLink = getElement('a', ['menu-link'], {
-	// 			link: item.link,
-	// 			title: item.title
-	// 		});
-	// 		return menuLink;
-	// 	});
-	// 	menuWrapper.append(...allMenu);
-	// 	wrapper.append(menuWrapper)
-	// }
 
 	header.append(container);
 	container.append(wrapper);
@@ -102,14 +95,101 @@ const movieConstructor = (selector, options) => {
 	document.title = options.title;
 
 	app.classList.add('body-app');
+
+	app.style.backgroundImage = options.background ? `url(${options.background})` : '';
+
 	if (options.header) {
 		app.append(createHeader(options));
 	}
 
+	if (options.main) {
+		app.append(createMain(options));
+	}
+
+};
+
+const createMain = ({
+	title,
+	main: {
+		genre,
+		rating,
+		description,
+		trailer
+	}
+}) => {
+	const main = getElement('main');
+
+	const container = getElement('div', ['container']);
+	main.append(container);
+	const wrapper = getElement('div', ['main-content']);
+	container.append(wrapper);
+	const content = getElement('div', ['content']);
+	wrapper.append(content);
+
+	if (genre) {
+		const genreSpan = getElement('span', ['genre', 'animated', 'fadeInRight'], {
+			textContent: genre
+		});
+		content.append(genreSpan);
+	}
+
+	if (rating) {
+		const ratingBlock = getElement('div', ['rating', 'animated', 'fadeInRight']);
+		const ratingStars = getElement('div', ['rating-stars']);
+		const ratingNumber = getElement('div', ['rating-number'], {
+			textContent: `${rating}/10`
+		});
+		for (let i = 0; i < 10; i++) {
+			const star = getElement('img', ['star'], {
+				alt: i ? '' : `Rating ${rating} from 10`,
+				src: i < rating ? 'img/star.svg' : 'img/star-o.svg'
+			});
+			ratingStars.append(star)
+		}
+
+		ratingBlock.append(ratingStars, ratingNumber);
+		content.append(ratingBlock);
+	}
+
+	content.append(getElement('h1', ['main-title', 'animated', 'fadeInRight'], {
+		textContent: title
+	}));
+
+	if (description) {
+		const descriptionElem = getElement('p', ['main-description', 'animated', 'fadeInRight'], {
+			textContent: description
+		});
+		content.append(descriptionElem)
+	}
+
+	if (trailer) {
+		const youtubeLink = getElement('a', ['button', 'animated', 'fadeInRight', 'youtube-modal'], {
+			href: trailer,
+			textContent: 'Watch trailer'
+		});
+
+		const youtubeImgLink = getElement('a', ['play', 'youtube-modal'], {
+			href: trailer,
+			ariaLabel: 'watch trailer'
+		});
+		const iconPlay = getElement('img', ['play-img'], {
+			src: 'img/play.svg',
+			alt: 'watch trailer',
+			ariaHidden: true
+		})
+
+
+		content.append(youtubeLink);
+		youtubeImgLink.append(iconPlay);
+		wrapper.append(youtubeImgLink);
+	}
+
+	return main;
 };
 
 movieConstructor('.app', {
 	title: 'Witcher',
+	background: 'witcher/background.jpg',
 	header: {
 		logo: 'witcher/logo.png',
 		social: [{
@@ -138,5 +218,11 @@ movieConstructor('.app', {
 			title: 'Отзывы',
 			link: '#'
 		}]
+	},
+	main: {
+		genre: '2019,фэнтези',
+		rating: '8',
+		description: 'Ведьмак Геральт, мутант и убийца чудовищ, на своей верной лошади по кличке Плотва путешествует по Континенту. За тугой мешочек чеканных монет этот мужчина избавит вас от всякой настырной нечисти— хоть от чудищ болотных оборотней и даже заколдованных принцесс.',
+		trailer: 'https://www.youtube.com/watch?v=P0oJqfLzZzQ',
 	}
-})
+});
