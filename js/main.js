@@ -40,8 +40,6 @@ const createHeader = (param) => {
 	const container = getElement('div', ['container']);
 	const wrapper = getElement('div', ['header']);
 
-	document.title = param.title;
-
 	if (param.header.logo) {
 		const logo = getElement('img', ['logo'], {
 			src: param.header.logo,
@@ -52,16 +50,16 @@ const createHeader = (param) => {
 
 
 	if (param.header.menu) {
-		const menuWrapper = getElement('nav', ['menu-list']);
-		const allMenu = param.header.menu.map(item => {
+		const nav = getElement('nav', ['menu-list']);
+		const allMenuLink = param.header.menu.map(item => {
 			const menuLink = getElement('a', ['menu-link'], {
-				link: item.link,
+				href: item.link,
+				textContent: item.title
 			});
-			menuLink.textContent = item.title
 			return menuLink;
 		});
-		menuWrapper.append(...allMenu);
-		wrapper.append(menuWrapper)
+		nav.append(...allMenuLink);
+		wrapper.append(nav)
 	}
 
 	if (param.header.social) {
@@ -100,6 +98,9 @@ const createHeader = (param) => {
 
 const movieConstructor = (selector, options) => {
 	const app = document.querySelector(selector);
+
+	document.title = options.title;
+
 	app.classList.add('body-app');
 	if (options.header) {
 		app.append(createHeader(options));
