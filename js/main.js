@@ -75,10 +75,15 @@ const createHeader = ({
 
 const movieConstructor = (selector, options) => {
 	const app = document.querySelector(selector);
-
 	document.title = options.title;
-
 	app.classList.add('body-app');
+
+	app.style.color = options.fornVolor || '';
+	app.style.backgroundColor = options.backgroundColor || '';
+
+	if (options.subColor) {
+		document.documentElement.style.setProperty('--sub-color', options.subColor);
+	}
 
 	if (options.favicon) {
 		const index = options.favicon.lastIndexOf('.');
@@ -238,6 +243,9 @@ movieConstructor('.app', {
 	title: 'Witcher',
 	background: 'witcher/background.jpg',
 	favicon: 'witcher/logo.png',
+	fontColor: '#ffffff',
+	backgroundColor: '#141218',
+	subColor: '#9D2929',
 	header: {
 		logo: 'witcher/logo.png',
 		social: [{
