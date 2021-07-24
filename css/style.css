@@ -1,10 +1,16 @@
 html {
     --sub-color: #9D2929;
+    overflow-y: hidden;
 }
 
 img {
     max-width: 100%;
     height: auto;
+}
+
+body {
+    position: relative;
+    overflow-y: hidden;
 }
 
 
@@ -73,6 +79,7 @@ img {
     line-height: 16px;
     margin-bottom: 16px;
     display: block;
+    -webkit-animation-delay: 0.1s;
     animation-delay: 0.1s;
 }
 
@@ -80,6 +87,7 @@ img {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    -webkit-animation-delay: 0.3s;
     animation-delay: 0.3s;
 }
 
@@ -94,6 +102,7 @@ img {
     line-height: 89px;
     font-family: serif;
     margin-bottom: 10px;
+    -webkit-animation-delay: 0.5s;
     animation-delay: 0.5s;
 }
 
@@ -102,6 +111,7 @@ img {
     font-size: 14px;
     line-height: 150%;
     margin-bottom: 40px;
+    -webkit-animation-delay: 0.7s;
     animation-delay: 0.7s;
 }
 
@@ -119,6 +129,7 @@ img {
     border: none;
     padding: 22px 72px;
     text-decoration: none;
+    -webkit-animation-delay: 1s;
     animation-delay: 1s;
 }
 
@@ -149,6 +160,7 @@ img {
     border-radius: 50%;
     left: -16px;
     top: -16px;
+    -webkit-animation: pulse 0.5s ease-in-out 0.5s infinite;
     animation: pulse 0.5s ease-in-out 0.5s infinite;
 }
 
@@ -193,6 +205,7 @@ img {
     position: absolute;
     width: 100%;
     height: 100%;
+    -o-object-fit: cover;
     object-fit: cover;
     top: 0;
     left: 0;
