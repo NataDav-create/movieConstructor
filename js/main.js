@@ -96,6 +96,18 @@ const movieConstructor = (selector, options) => {
 
 	app.classList.add('body-app');
 
+	if (options.favicon) {
+		const index = options.favicon.lastIndexOf('.');
+		const type = options.favicon.substring(index + 1);
+
+		const favicon = getElement('link', null, {
+			rel: 'icon',
+			href: options.favicon,
+			type: 'image/' + (type === 'svg' ? 'svg-xml' : type)
+		});
+		document.head.append(favicon)
+	}
+
 	app.style.backgroundImage = options.background ? `url(${options.background})` : '';
 
 	if (options.header) {
@@ -190,6 +202,7 @@ const createMain = ({
 movieConstructor('.app', {
 	title: 'Witcher',
 	background: 'witcher/background.jpg',
+	favicon: 'witcher/logo.png',
 	header: {
 		logo: 'witcher/logo.png',
 		social: [{
