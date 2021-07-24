@@ -106,6 +106,9 @@ const movieConstructor = (selector, options) => {
 	if (options.main) {
 		app.append(createMain(options));
 	}
+	if (options.footer) {
+		app.append(createFooter(options))
+	}
 
 };
 
@@ -239,6 +242,45 @@ const createMain = ({
 	return main;
 };
 
+const createFooter = ({
+	footer: {
+		copyright,
+		footerMenu
+	}
+}) => {
+	const footer = getElement('footer', ['footer']);
+	const container = getElement('div', ['container']);
+	footer.append(container);
+	const footerContent = getElement('div', ['footer-content']);
+	container.append(footerContent);
+	const left = getElement('div', ['left']);
+	footerContent.append(left);
+	const right = getElement('div', ['right']);
+	footerContent.append(right);
+
+	if (copyright) {
+		const spanCopyright = getElement('span', ['copyright'], {
+			textContent: copyright
+		});
+		left.append(spanCopyright);
+	}
+
+	if (footerMenu) {
+		const nav = getElement('nav', ['footer-menu']);
+		const allFooterMenuLinks = footerMenu.map(item => {
+			const footerLink = getElement('a', ['footer-link'], {
+				href: item.href,
+				textContent: item.title
+			});
+			return footerLink;
+		});
+		nav.append(...allFooterMenuLinks);
+		right.append(nav);
+	}
+
+	return footer;
+};
+
 movieConstructor('.app', {
 	title: 'Witcher',
 	background: 'witcher/background.jpg',
@@ -296,6 +338,19 @@ movieConstructor('.app', {
 			img: 'witcher/series/series-4.jpg',
 			title: 'Банкеты, ублюдки и похороны',
 			subtitle: 'Серия №4'
+		}]
+	},
+	footer: {
+		copyright: '© 2020 The Witcher. All right reserved.',
+		footerMenu: [{
+			title: 'Privacy Policy',
+			href: '#'
+		}, {
+			title: 'Terms of Service',
+			href: '#'
+		}, {
+			title: 'Legal',
+			href: '#'
 		}]
 	}
 });

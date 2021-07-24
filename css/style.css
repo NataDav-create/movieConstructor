@@ -1,6 +1,5 @@
 html {
     --sub-color: #9D2929;
-    overflow-y: hidden;
 }
 
 img {
@@ -10,7 +9,6 @@ img {
 
 body {
     position: relative;
-    overflow-y: hidden;
 }
 
 
